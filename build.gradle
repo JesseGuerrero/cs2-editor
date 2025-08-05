@@ -1,5 +1,6 @@
 plugins {
     id 'application'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
 }
 
 repositories {
@@ -7,6 +8,19 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.openjfx:javafx-controls:21.0.1'
+    implementation 'org.openjfx:javafx-fxml:21.0.1'
+
+    // Optional: for better text editing capabilities
+    implementation 'org.fxmisc.richtext:richtextfx:0.11.0'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.3'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+javafx {
+    version = '21.0.1'
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
 
 java {
@@ -17,4 +31,15 @@ java {
 
 application {
     mainClass = 'com.example.myapp.App'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+// Ensure JavaFX modules are available at runtime
+run {
+    jvmArgs = [
+            '--add-modules', 'javafx.controls,javafx.fxml'
+    ]
 }
